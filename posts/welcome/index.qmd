@@ -5,7 +5,7 @@ date: "2025-01-18"
 categories: [news]
 ---
 
-This is the first post in a Quarto blog. Welcome!
+This is my first post in a Quarto blog. Welcome!
 
 ![](thumbnail.jpg)
 
