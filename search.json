@@ -46,14 +46,14 @@
     "href": "posts/bruin/index.html#data-visualization",
     "title": "Visualizing the Palmer Penguins Dataset",
     "section": "Data Visualization",
-    "text": "Data Visualization\nBelow is the code to create the pair plot. This pair plot will visualize the relationships among flipper length, body mass, culmen length, and culmen depth for each respective penguin species.\n#Create the pair plot\nsns.pairplot(\n    penguins, #Dataset to visualize\n    hue=\"Species\", #Color points by penguin species\n    vars=[\"Flipper Length (mm)\", \"Body Mass (g)\", \"Culmen Length (mm)\", \"Culmen Depth (mm)\"], \n    #Variables included in plot\n    palette=\"Set2\") #Set color palette\n    \n#Add a title   \nplt.suptitle(\"Pair Plot of Palmer Penguins Variables\", y=1.02, fontsize=16)\n\n#Display the plot\nplt.show()"
+    "text": "Data Visualization\nBelow is the code to create the pair plot. This pair plot will visualize the relationships among flipper length, body mass, culmen length, and culmen depth for each respective penguin species.\n#Create the pair plot\nsns.pairplot(\n    penguins, #Dataset to visualize\n    hue=\"Species\", #Color points by penguin species\n    vars=[\"Flipper Length (mm)\", \"Body Mass (g)\",\n \"Culmen Length (mm)\", \"Culmen Depth (mm)\"], \n    #Variables included in plot\n    palette=\"Set2\") #Set color palette\n    \n#Add a title   \nplt.suptitle(\"Pair Plot of Palmer Penguins Variables\", y=1.02, fontsize=16)\n\n#Display the plot\nplt.show()"
   },
   {
     "objectID": "posts/bruin/index.html#explanation-of-data-visualization-code",
     "href": "posts/bruin/index.html#explanation-of-data-visualization-code",
     "title": "Visualizing the Palmer Penguins Dataset",
     "section": "Explanation of Data Visualization Code",
-    "text": "Explanation of Data Visualization Code\nThe code below creates the pair plot.\nsns.pairplot(\n    penguins,\n    hue=\"Species\",\n    vars=[\"Flipper Length (mm)\", \"Body Mass (g)\", \"Culmen Length (mm)\", \"Culmen Depth (mm)\"],\n    palette=\"Set2\")\nEach argument does the following: - penguins: The dataset used to create the plot. - hue=\"Species\": Ensures each penguin species will have distinctly colored data points. - vars=[...]: Specifies which numerical variables will be included in the pair plot. - palette=\"Set2\": Determines the color palette of the plot.\nThe code below adds a super title to the pair plot gird and finally displays the plot.\nplt.suptitle(\"Pair Plot of Palmer Penguins Variables\", y=1.02, fontsize=16)\nplt.show()"
+    "text": "Explanation of Data Visualization Code\nThe code below creates the pair plot.\nsns.pairplot(\n    penguins,\n    hue=\"Species\",\n    vars=[\"Flipper Length (mm)\", \"Body Mass (g)\",\n \"Culmen Length (mm)\", \"Culmen Depth (mm)\"],\n    palette=\"Set2\")\nEach argument does the following: - penguins: The dataset used to create the plot. - hue=\"Species\": Ensures each penguin species will have distinctly colored data points. - vars=[...]: Specifies which numerical variables will be included in the pair plot. - palette=\"Set2\": Determines the color palette of the plot.\nThe code below adds a super title to the pair plot gird and finally displays the plot.\nplt.suptitle(\"Pair Plot of Palmer Penguins Variables\", y=1.02, fontsize=16)\nplt.show()"
   },
   {
     "objectID": "posts/bruin/index.html#output",
@@ -74,7 +74,7 @@
     "href": "posts/bruin/index.html#summary",
     "title": "Visualizing the Palmer Penguins Dataset",
     "section": "Summary",
-    "text": "Summary\nBelow is a summary of all of the code from the tutorial:\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\nimport pandas as pd\nurl = \"https://raw.githubusercontent.com/pic16b-ucla/24W/main/datasets/palmer_penguins.csv\"\npenguins = pd.read_csv(url)\n\nsns.pairplot(\n    penguins,\n    hue=\"Species\",\n    vars=[\"Flipper Length (mm)\", \"Body Mass (g)\", \"Culmen Length (mm)\", \"Culmen Depth (mm)\"],\n    palette=\"Set2\")\n    \nplt.suptitle(\"Pair Plot of Palmer Penguins Variables\", y=1.02, fontsize=16)\nplt.show()"
+    "text": "Summary\nBelow is a summary of all of the code from the tutorial:\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\nimport pandas as pd\nurl = \"https://raw.githubusercontent.com/pic16b-ucla/24W/main/datasets/palmer_penguins.csv\"\npenguins = pd.read_csv(url)\n\nsns.pairplot(\n    penguins,\n    hue=\"Species\",\n    vars=[\"Flipper Length (mm)\", \"Body Mass (g)\",\n \"Culmen Length (mm)\", \"Culmen Depth (mm)\"],\n    palette=\"Set2\")\n    \nplt.suptitle(\"Pair Plot of Palmer Penguins Variables\", y=1.02, fontsize=16)\nplt.show()"
   },
   {
     "objectID": "posts/post-with-code/index.html",
