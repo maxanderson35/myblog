@@ -215,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    penguins, <span class="co">#Dataset to visualize</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">"Species"</span>, <span class="co">#Color points by penguin species</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">vars</span><span class="op">=</span>[<span class="st">"Flipper Length (mm)"</span>, <span class="st">"Body Mass (g)"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> <span class="st">"Culmen Length (mm)"</span>, <span class="st">"Culmen Depth (mm)"</span>], </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Culmen Length (mm)"</span>, <span class="st">"Culmen Depth (mm)"</span>], </span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Variables included in plot</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span><span class="st">"Set2"</span>) <span class="co">#Set color palette</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -232,9 +232,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    penguins,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">"Species"</span>,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">vars</span><span class="op">=</span>[<span class="st">"Flipper Length (mm)"</span>, <span class="st">"Body Mass (g)"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a> <span class="st">"Culmen Length (mm)"</span>, <span class="st">"Culmen Depth (mm)"</span>],</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Culmen Length (mm)"</span>, <span class="st">"Culmen Depth (mm)"</span>],</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span><span class="st">"Set2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Each argument does the following: - <code>penguins</code>: The dataset used to create the plot. - <code>hue="Species"</code>: Ensures each penguin species will have distinctly colored data points. - <code>vars=[...]</code>: Specifies which numerical variables will be included in the pair plot. - <code>palette="Set2"</code>: Determines the color palette of the plot.</p>
+<p>Each argument does the following: - <strong><code>penguins</code></strong>: The dataset used to create the plot.</p>
+<ul>
+<li><p><strong><code>hue="Species"</code></strong>: Ensures each penguin species will have distinctly colored data points.</p></li>
+<li><p><strong><code>vars=[...]</code></strong>: Specifies which numerical variables will be included in the pair plot.</p></li>
+<li><p><strong><code>palette="Set2"</code></strong>: Determines the color palette of the plot.</p></li>
+</ul>
 <p>The code below adds a super title to the pair plot gird and finally displays the plot.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Pair Plot of Palmer Penguins Variables"</span>, y<span class="op">=</span><span class="fl">1.02</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -268,7 +273,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    penguins,</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">"Species"</span>,</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">vars</span><span class="op">=</span>[<span class="st">"Flipper Length (mm)"</span>, <span class="st">"Body Mass (g)"</span>,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a> <span class="st">"Culmen Length (mm)"</span>, <span class="st">"Culmen Depth (mm)"</span>],</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Culmen Length (mm)"</span>, <span class="st">"Culmen Depth (mm)"</span>],</span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span><span class="st">"Set2"</span>)</span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Pair Plot of Palmer Penguins Variables"</span>, y<span class="op">=</span><span class="fl">1.02</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
