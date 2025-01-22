@@ -18,49 +18,63 @@
     "href": "posts/bruin/index.html",
     "title": "Visualizing the Palmer Penguins Dataset",
     "section": "",
-    "text": "The Palmer Penguins dataset is a dataset which provides information about three penguin species. It features data on 344 penguins collected from three islands. In this tutorial, we will walk through a demonstration of how to create a pair plot to analyze the relationships among key variables across the three species."
+    "text": "The Palmer Penguins dataset provides information about three penguin species. It features data on 344 penguins collected from three islands. In this tutorial, we will walk through a demonstration of how to create a pair plot to analyze the relationships among key variables across the three species."
   },
   {
-    "objectID": "posts/bruin/index.html#introduction",
-    "href": "posts/bruin/index.html#introduction",
+    "objectID": "posts/bruin/index.html#overview",
+    "href": "posts/bruin/index.html#overview",
     "title": "Visualizing the Palmer Penguins Dataset",
     "section": "",
-    "text": "The Palmer Penguins dataset is a dataset which provides information about three penguin species. It features data on 344 penguins collected from three islands. In this tutorial, we will walk through a demonstration of how to create a pair plot to analyze the relationships among key variables across the three species."
+    "text": "The Palmer Penguins dataset provides information about three penguin species. It features data on 344 penguins collected from three islands. In this tutorial, we will walk through a demonstration of how to create a pair plot to analyze the relationships among key variables across the three species."
   },
   {
     "objectID": "posts/bruin/index.html#importing-necessary-libraries",
     "href": "posts/bruin/index.html#importing-necessary-libraries",
     "title": "Visualizing the Palmer Penguins Dataset",
     "section": "Importing Necessary Libraries",
-    "text": "Importing Necessary Libraries\nFirst we will import all the libraries which we will utilize throughout the tutorial.\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns"
+    "text": "Importing Necessary Libraries\nFirst, we will import all the libraries which we will utilize throughout the tutorial.\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns"
   },
   {
     "objectID": "posts/bruin/index.html#loading-the-dataset",
     "href": "posts/bruin/index.html#loading-the-dataset",
     "title": "Visualizing the Palmer Penguins Dataset",
     "section": "Loading the Dataset",
-    "text": "Loading the Dataset\nNext, we will load the Palmer Penguins dataset by executing the code block below.\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns"
+    "text": "Loading the Dataset\nNext, we will load the Palmer Penguins dataset by executing the code block below.\nimport pandas as pd\nurl = \"https://raw.githubusercontent.com/pic16b-ucla/24W/main/datasets/palmer_penguins.csv\"\npenguins = pd.read_csv(url)"
   },
   {
     "objectID": "posts/bruin/index.html#data-visualization",
     "href": "posts/bruin/index.html#data-visualization",
     "title": "Visualizing the Palmer Penguins Dataset",
     "section": "Data Visualization",
-    "text": "Data Visualization\nBelow is the code to create a pair plot visualizing relationships among flipper length, body mass, culmen length, and culmen depth for each penguin species.\n# Create the pair plot\nsns.pairplot(\n    penguins,\n    hue=\"Species\",\n    vars=[\"Flipper Length (mm)\", \"Body Mass (g)\", \"Culmen Length (mm)\", \"Culmen Depth (mm)\"],\n    palette=\"Set2\"\n)\nplt.suptitle(\"Pair Plot of Palmer Penguins Variables\", y=1.02, fontsize=16)\nplt.show()"
+    "text": "Data Visualization\nBelow is the code to create the pair plot. This pair plot will visualize the relationships among flipper length, body mass, culmen length, and culmen depth for each respective penguin species.\n#Create the pair plot\nsns.pairplot(\n    penguins, #Dataset to visualize\n    hue=\"Species\", #Color points by penguin specie\n    vars=[\"Flipper Length (mm)\", \"Body Mass (g)\", \"Culmen Length (mm)\", \"Culmen Depth (mm)\"], \n    # Variables to include in the plot\n    palette=\"Set2\")\n    \nplt.suptitle(\"Pair Plot of Palmer Penguins Variables\", y=1.02, fontsize=16)\nplt.show()"
+  },
+  {
+    "objectID": "posts/bruin/index.html#explanation-of-data-visualization-code",
+    "href": "posts/bruin/index.html#explanation-of-data-visualization-code",
+    "title": "Visualizing the Palmer Penguins Dataset",
+    "section": "Explanation of Data Visualization Code",
+    "text": "Explanation of Data Visualization Code\nThe code below creates the pair plot.\nsns.pairplot(\n    penguins,\n    hue=\"Species\",\n    vars=[\"Flipper Length (mm)\", \"Body Mass (g)\", \"Culmen Length (mm)\", \"Culmen Depth (mm)\"],\n    palette=\"Set2\")\nEach argument does the following: - penguins: The dataset used to create the plot. - hue=\"Species\": Ensures each penguin species will have distinctly colored data points. - vars=[...]: Specifies which numerical variables will be included in the pair plot. - palette=\"Set2\": Determines the color palette of the plot.\nThe code below adds a super title to the pair plot gird and finally displays the plot.\nplt.suptitle(\"Pair Plot of Palmer Penguins Variables\", y=1.02, fontsize=16)\nplt.show()"
   },
   {
     "objectID": "posts/bruin/index.html#output",
     "href": "posts/bruin/index.html#output",
     "title": "Visualizing the Palmer Penguins Dataset",
     "section": "Output",
-    "text": "Output\nThe pair plot below provides a comprehensive overview of the relationships between key variables in the Palmer Penguins dataset, grouped by species:\n\n\n\nPair Plot of Palmer Penguins Variables"
+    "text": "Output\nAfter running all of the code from this tutorial, your output should be the following pair plot figure:\n\n\n\nPair Plot of Palmer Penguins Variables"
   },
   {
     "objectID": "posts/bruin/index.html#conclusion",
     "href": "posts/bruin/index.html#conclusion",
     "title": "Visualizing the Palmer Penguins Dataset",
     "section": "Conclusion",
-    "text": "Conclusion\nThis pair plot provides a clear visualization of the relationships among flipper length, body mass, culmen length, and culmen depth across penguin species. Such visualizations can uncover patterns and correlations, offering deeper insights into the characteristics of each species."
+    "text": "Conclusion\nThis pair plot provides a clear visualization of relationships among key variables across the penguin species. Specifically, we see a strong distinction between the species. For instance, the species are well-separated in their flipper length and culmen length. This indicates to us that these variables can serve as tools to differentiate among the species."
+  },
+  {
+    "objectID": "posts/bruin/index.html#summary",
+    "href": "posts/bruin/index.html#summary",
+    "title": "Visualizing the Palmer Penguins Dataset",
+    "section": "Summary",
+    "text": "Summary\nBelow is a summary of all of the code from the tutorial:\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\nimport pandas as pd\nurl = \"https://raw.githubusercontent.com/pic16b-ucla/24W/main/datasets/palmer_penguins.csv\"\npenguins = pd.read_csv(url)\n\nsns.pairplot(\n    penguins,\n    hue=\"Species\",\n    vars=[\"Flipper Length (mm)\", \"Body Mass (g)\", \"Culmen Length (mm)\", \"Culmen Depth (mm)\"],\n    palette=\"Set2\")\n    \nplt.suptitle(\"Pair Plot of Palmer Penguins Variables\", y=1.02, fontsize=16)\nplt.show()"
   },
   {
     "objectID": "posts/post-with-code/index.html",
