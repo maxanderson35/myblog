@@ -234,10 +234,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">vars</span><span class="op">=</span>[<span class="st">"Flipper Length (mm)"</span>, <span class="st">"Body Mass (g)"</span>,</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Culmen Length (mm)"</span>, <span class="st">"Culmen Depth (mm)"</span>],</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    palette<span class="op">=</span><span class="st">"Set2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Each argument does the following: <strong><code>penguins</code></strong>: The dataset used to create the plot.</p>
-<p><strong><code>hue="Species"</code></strong>: Ensures each penguin species will have distinctly colored data points.</p>
-<p><strong><code>vars=[...]</code></strong>: Specifies which numerical variables will be included in the pair plot.</p>
-<p><strong><code>palette="Set2"</code></strong>: Determines the color palette of the plot.</p>
+<p>Each argument does the following: - <strong><code>penguins</code></strong>: The dataset used to create the plot.</p>
+<ul>
+<li><p><strong><code>hue="Species"</code></strong>: Ensures each penguin species will have distinctly colored data points.</p></li>
+<li><p><strong><code>vars=[...]</code></strong>: Specifies which numerical variables will be included in the pair plot.</p></li>
+<li><p><strong><code>palette="Set2"</code></strong>: Determines the color palette of the plot.</p></li>
+</ul>
 <p>The code below adds a super title to the pair plot gird and finally displays the plot.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">"Pair Plot of Palmer Penguins Variables"</span>, y<span class="op">=</span><span class="fl">1.02</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
