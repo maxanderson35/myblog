@@ -1,38 +1,150 @@
 [
   {
-    "objectID": "HW 1/index.html",
-    "href": "HW 1/index.html",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Data Visualization of the Palmer Penguins Data Set",
+    "section": "",
+    "text": "About this blog"
+  },
+  {
+    "objectID": "posts/HW 1/index.html",
+    "href": "posts/HW 1/index.html",
     "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
     "section": "",
     "text": "This blog post, intended for PIC 16A students, will provide a step-by-step explanation on how to analyze climate data using the NOAA dataset. This tutorial will go through the process of cleaning, transforming, and querying the data with the aim of indentifying trends in global temperatures across several coutnries and regions.\nA preview of what this blog post will cover is the following: - Data Wrangling: Transforming the data into a suitable format. - SQL Queries: Writing efficient SQL queries to extract temperature data for a specific country. - Data Visualization: Creating interactive visualizations with Plotly to explore climate trends."
   },
   {
-    "objectID": "HW 1/index.html#overview",
-    "href": "HW 1/index.html#overview",
+    "objectID": "posts/HW 1/index.html#overview",
+    "href": "posts/HW 1/index.html#overview",
     "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
     "section": "",
     "text": "This blog post, intended for PIC 16A students, will provide a step-by-step explanation on how to analyze climate data using the NOAA dataset. This tutorial will go through the process of cleaning, transforming, and querying the data with the aim of indentifying trends in global temperatures across several coutnries and regions.\nA preview of what this blog post will cover is the following: - Data Wrangling: Transforming the data into a suitable format. - SQL Queries: Writing efficient SQL queries to extract temperature data for a specific country. - Data Visualization: Creating interactive visualizations with Plotly to explore climate trends."
   },
   {
-    "objectID": "HW 1/index.html#step-1-create-a-database",
-    "href": "HW 1/index.html#step-1-create-a-database",
+    "objectID": "posts/HW 1/index.html#step-1-create-a-database",
+    "href": "posts/HW 1/index.html#step-1-create-a-database",
     "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
     "section": "Step 1: Create a Database",
-    "text": "Step 1: Create a Database\nFirst, we will import the necessary libraries.\nimport os\nimport pandas as pd\nimport numpy as np\nimport sqlite3\nimport urllib.request"
+    "text": "Step 1: Create a Database\nOur first task will be to create a SQL database with three tables: temperatures, stations, and countries."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "myblog",
-    "section": "",
-    "text": "Visualizing the Palmer Penguins Dataset\n\n\n\n\n\n\ndata visualization\n\n\ntutorial\n\n\n\n\n\n\n\n\n\nJan 22, 2025\n\n\nMaxwell Anderson\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 21, 2025\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My PIC16B Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJan 18, 2025\n\n\nMaxwell Anderson\n\n\n\n\n\n\nNo matching items"
+    "objectID": "posts/HW 1/index.html#import-libraries",
+    "href": "posts/HW 1/index.html#import-libraries",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Import Libraries",
+    "text": "Import Libraries\nFirst, import the following libraries.\nimport os\nimport pandas as pd\nimport numpy as np\nimport sqlite3\nimport urllib.request"
   },
   {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
+    "objectID": "posts/HW 1/index.html#download-data",
+    "href": "posts/HW 1/index.html#download-data",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Download Data",
+    "text": "Download Data\nTo download the NOAA data, we create a folder named “datafiles to store the files if it does not already exist.\nimport os\n# create folder named \"datafiles\" if it does not exist\nif not os.path.exists(\"datafiles\"):\nos.mkdir(\"datafiles\")\nThe code below then downloads temperature data from NOAA. The data is in the form of decade-long intervals between 1901 and 2020. The code then generates the URL for each decade’s dataset. Finally, it saves the respective CSV file in the local datafiles.\n# download the files\nimport urllib.request\nintervals = [f\"{i}-{i+9}\" for i in range(1901, 2020, 10)]\nfor interval in intervals:\n    url = f\"https://raw.githubusercontent.com/PIC16B-ucla/24F/main/datasets/noaa-ghcn/decades/{interval}.csv\"\n    urllib.request.urlretrieve(url, f\"datafiles/{interval}.csv\")"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#connect-to-sql",
+    "href": "posts/HW 1/index.html#connect-to-sql",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Connect to SQL",
+    "text": "Connect to SQL\nThe following code creates (or connects to) a database named temps.db in the current directory. In the case that the database does not exist, SQLite will create it by default.\nconn = sqlite3.connect(\"temps.db\") # create a database in current directory called temps.db"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#reshaping-the-data",
+    "href": "posts/HW 1/index.html#reshaping-the-data",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Reshaping the data",
+    "text": "Reshaping the data\nNow we will process each csv file one at a time, using the prepare_df function. Because the dataset is in wide format, the prepare_df(df) function melts it into a long format. The function ensures each row in the dataset represents a single month. Additionaly, it extracts month numbers and scales temperature values.\ndef prepare_df(df):\n    \"\"\"\n    prepares a piece of wide format dataframe into a long format data frame\n    \"\"\"\n    # melt to the long format table\n    df = df.melt(\n        id_vars = [\"ID\", \"Year\"],\n        value_vars = [f\"VALUE{i}\" for i in range(1, 13)],\n        var_name = \"Month\",\n        value_name = \"Temp\"\n    )\n    \n    # cleaning month and temp\n    df[\"Month\"] = df[\"Month\"].str[5:].astype(int)\n    df[\"Temp\"]  = df[\"Temp\"] / 100\n    # df = df[~np.isnan(df[\"Temp\"])]\n    \n    #Remove NaN temperature values\n    df = df.dropna(subset=[\"Temp\"])\n\n    return df"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#loading-and-storing-temperature-data",
+    "href": "posts/HW 1/index.html#loading-and-storing-temperature-data",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Loading and Storing Temperature Data",
+    "text": "Loading and Storing Temperature Data\nThis loop transforms and stores the NOAA temperature data for each decade. The code first loads each CSV file, applies the prepare_df function, and finally saves the cleaned data to the SQLite database. After executing this code, the temperature table will be complete.\nintervals = [f\"{i}-{i+9}\" for i in range(1901, 2020, 10)]\nfor i, interval in enumerate(intervals):\n    filepath = f\"datafiles/{interval}.csv\"\n    df = pd.read_csv(filepath)\n    df = prepare_df(df)\n    df.to_sql(\"temperatures\", conn, if_exists = \"replace\" if i == 0 else \"append\", index = False)"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#loading-stations-data",
+    "href": "posts/HW 1/index.html#loading-stations-data",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Loading Stations Data",
+    "text": "Loading Stations Data\nThis code block similarily downloads station metadata from NOAA. It proceeds to load the data it into a pandas DataFrame and stores it in the SQLite database. This create the stations table.\nfilename = \"https://raw.githubusercontent.com/PIC16B-ucla/25W/refs/heads/main/datasets/noaa-ghcn/station-metadata.csv\"\nstations = pd.read_csv(filename)\nstations.to_sql(\"stations\", conn, if_exists = \"replace\", index=False)"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#loading-countries-data",
+    "href": "posts/HW 1/index.html#loading-countries-data",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Loading Countries Data",
+    "text": "Loading Countries Data\nNow we repeat this same process for the countries data.\nfilename = \"https://raw.githubusercontent.com/datasets/country-codes/master/data/country-codes.csv\"\ncountries = pd.read_csv(filename)\ncountries.to_sql(\"countries\", conn, if_exists = \"replace\", index=False)"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#final-check",
+    "href": "posts/HW 1/index.html#final-check",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Final Check",
+    "text": "Final Check\nNow we have a database containing all three of the specified tables. To check that this indeed the case, we will run the following code block:\ncursor = conn.cursor()\ncursor.execute(\"SELECT name FROM sqlite_master WHERE type='table'\")\nprint(cursor.fetchall())\nIf all the steps up to this point have been completed successfuly, your code will output the following:\n[('temperatures',), ('stations',), ('countries',)]"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#close-database-connection",
+    "href": "posts/HW 1/index.html#close-database-connection",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Close Database Connection",
+    "text": "Close Database Connection\nRun the following code to ensure the connection to the database is closed.\n#Close the database connection\nconn.close()"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#step-2-writing-a-query-function",
+    "href": "posts/HW 1/index.html#step-2-writing-a-query-function",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Step 2: Writing a Query Function",
+    "text": "Step 2: Writing a Query Function\nIn this part of the tutorial, we will be querying the database created in Part 1. To do this, we will write a query function that extracts temperature readings for a specified country, time range, and month.\nNamely, in the climate_database.py file, write a function called query_climate_database() which accepts five arguments:\n\ndb_file: The file name for the database\ncountry: A string giving the name of a country for which data should be returned.\nyear_begin and year_end: Two integers giving the earliest and latest years for which data should be returned (inclusive).\n\nmonth: An integer giving the month of the year for which data should be returned.\n\nExecute the code below to load the query_climate_database() function and show its content:\nfrom climate_database import query_climate_database\nimport inspect\nprint(inspect.getsource(query_climate_database))"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#output",
+    "href": "posts/HW 1/index.html#output",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Output",
+    "text": "Output\nOnce running the code, you should see the following output:\n\ndef query_climate_database(db_file, country, year_begin, year_end, month):\n    \"\"\"\n    Queries climate database. Retrns Pandas DataFrame with temperature readings\n    for a country, date range, and month.\n    \n    Args:\n        db_file (str):SQLite database file\n        country (str):name of the country.\n        year_begin (int):earliest year for data returned.\n        year_end (int):latest year for data returned.\n        month (int):month data should be returned.\n    \n    Returns:\n        pd.DataFrame:dataframe with columns [NAME, LATITUDE, LONGITUDE, Country, Year, Month, Temp].\n    \"\"\"\n\n    #connect to database\n    conn = sqlite3.connect(db_file)\n    \n    #Query code\n    query = f\"\"\"\n    SELECT S.NAME AS NAME, \n           S.LATITUDE AS LATITUDE, \n           S.LONGITUDE AS LONGITUDE, \n           C.\"official_name_en\" AS Country, \n           T.Year AS Year, \n           T.Month AS Month, \n           T.Temp AS Temp\n    FROM temperatures T\n    JOIN stations S ON T.ID = S.ID\n    JOIN countries C ON SUBSTR(S.ID, 1, 2) = C.\"ISO3166-1-Alpha-2\"\n    WHERE C.\"official_name_en\" = ? \n    AND T.Year BETWEEN ? AND ? \n    AND T.Month = ?\n    ORDER BY S.NAME ASC;\n    \"\"\"\n\n    #execute query and then fetch the results\n    df = pd.read_sql_query(query, conn, params=(country, year_begin, year_end, month))\n\n    #close connection\n    conn.close()\n\n    return df"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#verification",
+    "href": "posts/HW 1/index.html#verification",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Verification",
+    "text": "Verification\nTo ensure the query function is implemented properly, run the following code and match it to the output below.\nquery_climate_database(db_file = \"temps.db\",\n                       country = \"India\", \n                       year_begin = 1980, \n                       year_end = 2020,\n                       month = 1)"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#step-3-writing-a-geographic-scatter-function-for-yearly-temperature-increases",
+    "href": "posts/HW 1/index.html#step-3-writing-a-geographic-scatter-function-for-yearly-temperature-increases",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Step 3: Writing a Geographic Scatter Function for Yearly Temperature Increases",
+    "text": "Step 3: Writing a Geographic Scatter Function for Yearly Temperature Increases\nIn this part of the tutorial, we will write a function to create visualizations that address the following question:\nHow does the average yearly change in temperature vary within a given country?\nSpecifically we will define the function temperature_coefficient_plot()\nThe code for the function is as follows:\ndef temperature_coefficient_plot(db_file, year_begin, year_end, month, min_obs=10, **kwargs):\n    \"\"\"\n    Generate interactive scatter plot of yearly temperature rises\n    \"\"\"\n    #Import necesry libraries\n    import pandas as pd\n    import numpy as np\n    import plotly.express as px\n    import sqlite3\n\n    #Load database into DataFrames\n    conn = sqlite3.connect(db_file)\n    df_temp = pd.read_sql_query(\"SELECT * FROM temperatures\", conn)\n    df_stations = pd.read_sql_query(\"SELECT * FROM stations\", conn)\n    conn.close()\n    #merge on \"ID\"\n    df = df_temp.merge(df_stations, on=\"ID\")\n\n\n\n    #filter data\n    df = df[\n        (df[\"Month\"] == month) &\n        (df[\"Year\"] &gt;= year_begin) &\n        (df[\"Year\"] &lt;= year_end)]\n\n    #Handle empty data case\n    if df.empty:\n        raise ValueError(\"No data found for the specified parameters.\")\n\n    #get yearly temp trend slope for given station\n    def compute_slope(group):\n        if len(group) &lt; min_obs:\n            return np.nan  #ignore stations lacking data\n        slope, _ = np.polyfit(group[\"Year\"], group[\"Temp\"], 1)\n        return slope\n\n    #group by station \n    trends = df.groupby([\"NAME\", \"LATITUDE\", \"LONGITUDE\"]).apply(compute_slope).reset_index()\n    trends.columns = [\"NAME\", \"LATITUDE\", \"LONGITUDE\", \"Temp_Trend\"]\n    #remove lacking stations\n    trends = trends.dropna()\n\n    #Make plot w/ Plotly\n    fig = px.scatter_mapbox(\n        trends,\n        lat=\"LATITUDE\",\n        lon=\"LONGITUDE\",\n        color=\"Temp_Trend\",\n        hover_name=\"NAME\",\n        title=f\"Estimates of Yearly Temperature Increase ({year_begin}-{year_end})\",\n        color_continuous_scale=px.colors.diverging.RdGy_r,\n        center={\"lat\": trends[\"LATITUDE\"].mean(), \"lon\": trends[\"LONGITUDE\"].mean()},\n        zoom=2,\n        **kwargs\n    )\n\n    # style plot\n    fig.update_layout(mapbox_style=\"carto-positron\")\n\n    return fig\nTo ensure the funciton was implemented properly, run the following test case to ensure the output matches:\n# assumes you have imported necessary packages\ncolor_map = px.colors.diverging.RdGy_r # choose a colormap\n\nfig = temperature_coefficient_plot(\"India\", 1980, 2020, 1, \n                                   min_obs = 10,\n                                   zoom = 2,\n                                   mapbox_style=\"carto-positron\",\n                                   color_continuous_scale=color_map)\n\nfig.show()"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#creating-two-additional-figures",
+    "href": "posts/HW 1/index.html#creating-two-additional-figures",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Creating Two Additional Figures",
+    "text": "Creating Two Additional Figures\nNow, we will create at least one more SQL query function in climate_database.py and at least two more complex and interesting interactive data visualizations using the same data set."
+  },
+  {
+    "objectID": "posts/HW 1/index.html#line-plot-of-yearly-average-temperature",
+    "href": "posts/HW 1/index.html#line-plot-of-yearly-average-temperature",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Line Plot of Yearly Average Temperature",
+    "text": "Line Plot of Yearly Average Temperature\nWe will make a line plot that shows how the average temperature changes over time.\nimport plotly.express as px\n\ndef plot_yearly_temperature_trend(db_file, year_begin, year_end):\n    \"\"\"\n    line plot of avg temperature per year\n    \"\"\"\n    df = query_temperature_data(db_file, year_begin, year_end)\n\n    #yearly avg temp\n    yearly_avg = df.groupby(\"Year\")[\"Temp\"].mean().reset_index()\n\n    #line plot\n    fig = px.line(yearly_avg, x=\"Year\", y=\"Temp\", \n                  title=\"Average Yearly Temperature Trend\",\n                  labels={\"Temp\": \"Avg Temperature (°C)\", \"Year\": \"Year\"})\n\n    return fig\nTo test the function, run the code below:\nig1 = plot_yearly_temperature_trend(\"temps.db\", 1980, 2020)\nfig1\n\n\n\nYearly Temperature Increase in India"
+  },
+  {
+    "objectID": "posts/HW 1/index.html#histogram-of-temperature-distribution",
+    "href": "posts/HW 1/index.html#histogram-of-temperature-distribution",
+    "title": "Analyzing Climate Trends Using NOAA’s Global Temperature Data",
+    "section": "Histogram of Temperature Distribution",
+    "text": "Histogram of Temperature Distribution\nNow, we will make a histogram that shows the distribution of temperatures across all years.\ndef plot_temperature_distribution(db_file, year_begin, year_end, month=None):\n    \"\"\"\n    histogram of temp distribution over years\n    \"\"\"\n    df = query_temperature_data(db_file, year_begin, year_end, month)\n\n    #generate histogram\n    fig = px.histogram(df, x=\"Temp\", nbins=30, \n                       title=\"Temperature Distribution\",\n                       labels={\"Temp\": \"Temperature (°C)\"},\n                       color_discrete_sequence=[\"#636EFA\"])\n\n    return fig\nRun this code to test output:\nfig2 = plot_temperature_distribution(\"temps.db\", 1980, 2020)\nfig2.write_html(\"temperature_distribution.html\")\nfig2\n\n\n\nYearly Temperature Increase in India"
+  },
+  {
+    "objectID": "posts/welcome/index.html",
+    "href": "posts/welcome/index.html",
+    "title": "Welcome To My PIC16B Blog",
     "section": "",
-    "text": "This is a post with executable code."
+    "text": "This is my first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
   },
   {
     "objectID": "posts/bruin/index.html",
@@ -98,17 +210,24 @@
     "text": "Summary\nBelow is a summary of all of the code from the tutorial:\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\nimport pandas as pd\nurl = \"https://raw.githubusercontent.com/pic16b-ucla/24W/main/datasets/palmer_penguins.csv\"\npenguins = pd.read_csv(url)\n\ndef create_penguin_pairplot(data=penguins, hue=\"Species\", variables=None,\n                            palette=\"Set2\", title=\"Pair Plot of Palmer Penguins Variables\"):\n    \n    if variables is None:\n        variables = [\"Flipper Length (mm)\", \"Body Mass (g)\",\n                     \"Culmen Length (mm)\", \"Culmen Depth (mm)\"]\n    \n    sns.pairplot(\n        data=data,\n        hue=hue, \n        vars=variables, \n        palette=palette\n    )\n    \n    plt.suptitle(title, y=1.02, fontsize=16)\n    plt.show()\n\ncreate_penguin_pairplot(penguins)"
   },
   {
-    "objectID": "posts/welcome/index.html",
-    "href": "posts/welcome/index.html",
-    "title": "Welcome To My PIC16B Blog",
+    "objectID": "posts/post-with-code/index.html",
+    "href": "posts/post-with-code/index.html",
+    "title": "Post With Code",
     "section": "",
-    "text": "This is my first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+    "text": "This is a post with executable code."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Data Visualization of the Palmer Penguins Data Set",
+    "objectID": "posts/HW 1/Untitled1.html",
+    "href": "posts/HW 1/Untitled1.html",
+    "title": "myblog",
     "section": "",
-    "text": "About this blog"
+    "text": "# Import Libraries\nimport os\nimport pandas as pd\nimport numpy as np\nimport sqlite3\nimport urllib.request\n\n# Create folder named \"datafiles\" if it does not exist\nif not os.path.exists(\"datafiles\"):\n    os.mkdir(\"datafiles\")\n\n# Download NOAA temperature data (1901-2020) in decade intervals\nintervals = [f\"{i}-{i+9}\" for i in range(1901, 2020, 10)]\n\nfor interval in intervals:\n    url = f\"https://raw.githubusercontent.com/PIC16B-ucla/24F/main/datasets/noaa-ghcn/decades/{interval}.csv\"\n    urllib.request.urlretrieve(url, f\"datafiles/{interval}.csv\")\n\n# Connect to SQLite database\nconn = sqlite3.connect(\"temps.db\")  # Create a database in the current directory\n\n# Function to transform wide format data into long format and remove NaN values\ndef prepare_df(df):\n    \"\"\"\n    Converts a wide-format dataframe into a long-format dataframe.\n    Removes any rows with NaN temperature values.\n    \"\"\"\n    df = df.melt(\n        id_vars=[\"ID\", \"Year\"],\n        value_vars=[f\"VALUE{i}\" for i in range(1, 13)],\n        var_name=\"Month\",\n        value_name=\"Temp\"\n    )\n\n    df[\"Month\"] = df[\"Month\"].str[5:].astype(int)\n    df[\"Temp\"] = df[\"Temp\"] / 100\n\n    # Remove NaN temperature values\n    df = df.dropna(subset=[\"Temp\"])\n\n    return df\n\n# Load, transform, and store temperature data in SQLite database\nfor i, interval in enumerate(intervals):\n    filepath = f\"datafiles/{interval}.csv\"\n    df = pd.read_csv(filepath)\n    df = prepare_df(df)\n    df.to_sql(\"temperatures\", conn, if_exists=\"replace\" if i == 0 else \"append\", index=False)\n\n# Load and store station metadata\nfilename = \"https://raw.githubusercontent.com/PIC16B-ucla/25W/refs/heads/main/datasets/noaa-ghcn/station-metadata.csv\"\nstations = pd.read_csv(filename)\nstations.to_sql(\"stations\", conn, if_exists=\"replace\", index=False)\n\n# Load and store countries data\nfilename = \"https://raw.githubusercontent.com/datasets/country-codes/master/data/country-codes.csv\"\ncountries = pd.read_csv(filename)\ncountries.to_sql(\"countries\", conn, if_exists=\"replace\", index=False)\n\n# Final check - List all tables in the database\ncursor = conn.cursor()\ncursor.execute(\"SELECT name FROM sqlite_master WHERE type='table'\")\nprint(cursor.fetchall())\n\n# Close the database connection\n#conn.close()\n\n[('temperatures',), ('stations',), ('countries',)]\n\n\n\nimport sqlite3\nimport pandas as pd\n\ndef query_climate_database(db_file, country, year_begin, year_end, month):\n    \"\"\"\n    Queries climate database. Retrns Pandas DataFrame with temperature readings\n    for a country, date range, and month.\n    \n    Args:\n        db_file (str):SQLite database file\n        country (str):name of the country.\n        year_begin (int):earliest year for data returned.\n        year_end (int):latest year for data returned.\n        month (int):month data should be returned.\n    \n    Returns:\n        pd.DataFrame:dataframe with columns [NAME, LATITUDE, LONGITUDE, Country, Year, Month, Temp].\n    \"\"\"\n\n    #connect to database\n    conn = sqlite3.connect(db_file)\n    \n    #Query code\n    query = f\"\"\"\n    SELECT S.NAME AS NAME, \n           S.LATITUDE AS LATITUDE, \n           S.LONGITUDE AS LONGITUDE, \n           C.\"official_name_en\" AS Country, \n           T.Year AS Year, \n           T.Month AS Month, \n           T.Temp AS Temp\n    FROM temperatures T\n    JOIN stations S ON T.ID = S.ID\n    JOIN countries C ON SUBSTR(S.ID, 1, 2) = C.\"ISO3166-1-Alpha-2\"\n    WHERE C.\"official_name_en\" = ? \n    AND T.Year BETWEEN ? AND ? \n    AND T.Month = ?\n    ORDER BY S.NAME ASC;\n    \"\"\"\n\n    #execute query and then fetch the results\n    df = pd.read_sql_query(query, conn, params=(country, year_begin, year_end, month))\n\n    #close connection\n    conn.close()\n\n    return df\n\n\n\n\ndf = query_climate_database(db_file=\"temps.db\",\n                            country=\"India\", \n                            year_begin=1980, \n                            year_end=2020,\n                            month=1)\ndf\n\n\n\n\n\n\n\n\nNAME\nLATITUDE\nLONGITUDE\nCountry\nYear\nMonth\nTemp\n\n\n\n\n0\nAGARTALA\n23.883\n91.250\nIndia\n1980\n1\n18.21\n\n\n1\nAGARTALA\n23.883\n91.250\nIndia\n1981\n1\n18.25\n\n\n2\nAGARTALA\n23.883\n91.250\nIndia\n1982\n1\n19.31\n\n\n3\nAGARTALA\n23.883\n91.250\nIndia\n1985\n1\n19.25\n\n\n4\nAGARTALA\n23.883\n91.250\nIndia\n1988\n1\n19.54\n\n\n...\n...\n...\n...\n...\n...\n...\n...\n\n\n3147\nVISHAKHAPATNAM\n17.717\n83.233\nIndia\n2016\n1\n25.09\n\n\n3148\nVISHAKHAPATNAM\n17.717\n83.233\nIndia\n2017\n1\n23.90\n\n\n3149\nVISHAKHAPATNAM\n17.717\n83.233\nIndia\n2018\n1\n22.65\n\n\n3150\nVISHAKHAPATNAM\n17.717\n83.233\nIndia\n2019\n1\n22.20\n\n\n3151\nVISHAKHAPATNAM\n17.717\n83.233\nIndia\n2020\n1\n23.75\n\n\n\n\n3152 rows × 7 columns\n\n\n\n\ndef temperature_coefficient_plot(db_file, year_begin, year_end, month, min_obs=10, **kwargs):\n    \"\"\"\n    Generate interactive scatter plot of yearly temperature rises\n    \"\"\"\n    #Import necesry libraries\n    import pandas as pd\n    import numpy as np\n    import plotly.express as px\n    import sqlite3\n\n    #Load database into DataFrames\n    conn = sqlite3.connect(db_file)\n    df_temp = pd.read_sql_query(\"SELECT * FROM temperatures\", conn)\n    df_stations = pd.read_sql_query(\"SELECT * FROM stations\", conn)\n    conn.close()\n    #merge on \"ID\"\n    df = df_temp.merge(df_stations, on=\"ID\")\n\n\n\n    #filter data\n    df = df[\n        (df[\"Month\"] == month) &\n        (df[\"Year\"] &gt;= year_begin) &\n        (df[\"Year\"] &lt;= year_end)]\n\n    #Handle empty data case\n    if df.empty:\n        raise ValueError(\"No data found for the specified parameters.\")\n\n    #get yearly temp trend slope for given station\n    def compute_slope(group):\n        if len(group) &lt; min_obs:\n            return np.nan  #ignore stations lacking data\n        slope, _ = np.polyfit(group[\"Year\"], group[\"Temp\"], 1)\n        return slope\n\n    #group by station \n    trends = df.groupby([\"NAME\", \"LATITUDE\", \"LONGITUDE\"]).apply(compute_slope).reset_index()\n    trends.columns = [\"NAME\", \"LATITUDE\", \"LONGITUDE\", \"Temp_Trend\"]\n    #remove lacking stations\n    trends = trends.dropna()\n\n    #Make plot w/ Plotly\n    fig = px.scatter_mapbox(\n        trends,\n        lat=\"LATITUDE\",\n        lon=\"LONGITUDE\",\n        color=\"Temp_Trend\",\n        hover_name=\"NAME\",\n        title=f\"Estimates of Yearly Temperature Increase ({year_begin}-{year_end})\",\n        color_continuous_scale=px.colors.diverging.RdGy_r,\n        center={\"lat\": trends[\"LATITUDE\"].mean(), \"lon\": trends[\"LONGITUDE\"].mean()},\n        zoom=2,\n        **kwargs\n    )\n\n    # style plot\n    fig.update_layout(mapbox_style=\"carto-positron\")\n\n    return fig\n# Choose colormap\ncolor_map = px.colors.diverging.RdGy_r  \n\nfig = temperature_coefficient_plot(\"temps.db\", 1980, 2020, 1, min_obs=10)\nfig.show()"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "myblog",
+    "section": "",
+    "text": "Analyzing Climate Trends Using NOAA’s Global Temperature Data\n\n\n\n\n\n\ndata analysis\n\n\nclimate trends\n\n\n\n\n\n\n\n\n\nFeb 3, 2025\n\n\nMaxwell Anderson\n\n\n\n\n\n\n\n\n\n\n\n\nVisualizing the Palmer Penguins Dataset\n\n\n\n\n\n\ndata visualization\n\n\ntutorial\n\n\n\n\n\n\n\n\n\nJan 22, 2025\n\n\nMaxwell Anderson\n\n\n\n\n\n\n\n\n\n\n\n\nPost With Code\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\nJan 21, 2025\n\n\nHarlow Malloc\n\n\n\n\n\n\n\n\n\n\n\n\nWelcome To My PIC16B Blog\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\nJan 18, 2025\n\n\nMaxwell Anderson\n\n\n\n\n\n\nNo matching items"
   }
 ]

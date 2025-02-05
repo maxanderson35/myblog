@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://maxanderson35.github.io/myblog/HW 1/index.html</loc>
-    <lastmod>2025-02-04T08:11:24.612Z</lastmod>
+    <loc>https://maxanderson35.github.io/myblog/about.html</loc>
+    <lastmod>2025-01-22T21:00:57.250Z</lastmod>
   </url>
   <url>
-    <loc>https://maxanderson35.github.io/myblog/index.html</loc>
-    <lastmod>2025-01-21T22:50:47.945Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maxanderson35.github.io/myblog/posts/post-with-code/index.html</loc>
-    <lastmod>2025-01-21T22:50:47.946Z</lastmod>
-  </url>
-  <url>
-    <loc>https://maxanderson35.github.io/myblog/posts/bruin/index.html</loc>
-    <lastmod>2025-01-23T02:06:59.206Z</lastmod>
+    <loc>https://maxanderson35.github.io/myblog/posts/HW 1/index.html</loc>
+    <lastmod>2025-02-05T08:10:58.220Z</lastmod>
   </url>
   <url>
     <loc>https://maxanderson35.github.io/myblog/posts/welcome/index.html</loc>
     <lastmod>2025-01-21T23:22:59.402Z</lastmod>
   </url>
   <url>
-    <loc>https://maxanderson35.github.io/myblog/about.html</loc>
-    <lastmod>2025-01-22T21:00:57.250Z</lastmod>
+    <loc>https://maxanderson35.github.io/myblog/posts/bruin/index.html</loc>
+    <lastmod>2025-02-04T08:19:20.081Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maxanderson35.github.io/myblog/posts/post-with-code/index.html</loc>
+    <lastmod>2025-01-21T22:50:47.946Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maxanderson35.github.io/myblog/posts/HW 1/Untitled1.html</loc>
+    <lastmod>2025-02-05T07:56:33.022Z</lastmod>
+  </url>
+  <url>
+    <loc>https://maxanderson35.github.io/myblog/index.html</loc>
+    <lastmod>2025-01-21T22:50:47.945Z</lastmod>
   </url>
 </urlset>
